@@ -17,15 +17,15 @@ class World_Of_Warcraft_Recruitment_Widget extends WP_Widget
     {
         /* Widget settings. */
         $widget_ops = array(
-            'classname' => 'world-of-warcraft-recruitment',
-            'description' => __('Displays your guild\'s recruitment status.', 'world-of-warcraft-recruitment')
+            'classname' => 'world-of-warcraft-wow-recruitment',
+            'description' => __('Displays your guild\'s recruitment status.', 'world-of-warcraft-wow-recruitment')
         );
 
         /* Widget control settings. */
-        $control_ops = array('width' => 500, 'height' => 600, 'id_base' => 'world-of-warcraft-recruitment');
+        $control_ops = array('width' => 500, 'height' => 600, 'id_base' => 'world-of-warcraft-wow-recruitment');
 
         /* Create the widget. */
-        parent::__construct('world-of-warcraft-recruitment', __('World of Warcraft (WoW) Recruitment', 'world-of-warcraft-recruitment'), $widget_ops, $control_ops);
+        parent::__construct('world-of-warcraft-wow-recruitment', __('World of Warcraft (WoW) Recruitment', 'world-of-warcraft-wow-recruitment'), $widget_ops, $control_ops);
     }
 
     /**
@@ -331,15 +331,15 @@ class World_Of_Warcraft_Recruitment_Widget extends WP_Widget
 
         <div style="float: right;">
             <a href="<?php echo esc_url(WR_HELP_URL); ?>" target="_blank" rel="noopener noreferrer"> <img
-                    src="<?php echo esc_url(WR_INFO_ICON_URL); ?>" title="<?php esc_attr_e('More Info', 'world-of-warcraft-recruitment'); ?>"
-                    alt="<?php esc_attr_e('View more info', 'world-of-warcraft-recruitment'); ?>"/>
+                    src="<?php echo esc_url(WR_INFO_ICON_URL); ?>" title="<?php esc_attr_e('More Info', 'world-of-warcraft-wow-recruitment'); ?>"
+                    alt="<?php esc_attr_e('View more info', 'world-of-warcraft-wow-recruitment'); ?>"/>
             </a> <a href="<?php echo esc_url(WR_BUG_URL); ?>" target="_blank" rel="noopener noreferrer"> <img
-                    src="<?php echo esc_url(WR_BUG_ICON_URL); ?>" title="<?php esc_attr_e('Report Bugs', 'world-of-warcraft-recruitment'); ?>"
-                    alt="<?php esc_attr_e('Report bugs', 'world-of-warcraft-recruitment'); ?>"/>
+                    src="<?php echo esc_url(WR_BUG_ICON_URL); ?>" title="<?php esc_attr_e('Report Bugs', 'world-of-warcraft-wow-recruitment'); ?>"
+                    alt="<?php esc_attr_e('Report bugs', 'world-of-warcraft-wow-recruitment'); ?>"/>
             </a>
         </div>
         <p>
-            <label for="<?php echo esc_attr($this->get_field_id('title')); ?>"><?php esc_html_e('Title (optional):', 'world-of-warcraft-recruitment'); ?>
+            <label for="<?php echo esc_attr($this->get_field_id('title')); ?>"><?php esc_html_e('Title (optional):', 'world-of-warcraft-wow-recruitment'); ?>
             </label> <input type="text"
                             id="<?php echo esc_attr($this->get_field_id('title')); ?>"
                             name="<?php echo esc_attr($this->get_field_name('title')); ?>"
@@ -347,7 +347,7 @@ class World_Of_Warcraft_Recruitment_Widget extends WP_Widget
         </p>
         <p>
             <label
-                for="<?php echo esc_attr($this->get_field_id('title_url')); ?>"><?php esc_html_e('Recruitment Page URL (optional, if not empty please use full url):', 'world-of-warcraft-recruitment'); ?>
+                for="<?php echo esc_attr($this->get_field_id('title_url')); ?>"><?php esc_html_e('Recruitment Page URL (optional, if not empty please use full url):', 'world-of-warcraft-wow-recruitment'); ?>
             </label> <input type="text"
                             id="<?php echo esc_attr($this->get_field_id('title_url')); ?>"
                             name="<?php echo esc_attr($this->get_field_name('title_url')); ?>"
@@ -356,7 +356,7 @@ class World_Of_Warcraft_Recruitment_Widget extends WP_Widget
 
         <p>
             <label
-                for="<?php echo esc_attr($this->get_field_id('message')); ?>"><?php esc_html_e('Recruitment Message (optional)', 'world-of-warcraft-recruitment'); ?>
+                for="<?php echo esc_attr($this->get_field_id('message')); ?>"><?php esc_html_e('Recruitment Message (optional)', 'world-of-warcraft-wow-recruitment'); ?>
             </label>
 	<textarea rows="3" cols="1"
               id="<?php echo esc_attr($this->get_field_id('message')); ?>"
@@ -366,14 +366,14 @@ class World_Of_Warcraft_Recruitment_Widget extends WP_Widget
         <p>
 
 
-            <label for="<?php echo esc_attr($this->get_field_id('wr_max_row')); ?>"><?php esc_html_e('Number of rows:', 'world-of-warcraft-recruitment'); ?>
+            <label for="<?php echo esc_attr($this->get_field_id('wr_max_row')); ?>"><?php esc_html_e('Number of rows:', 'world-of-warcraft-wow-recruitment'); ?>
             </label> <input type="text"
                             id="<?php echo esc_attr($this->get_field_id('wr_max_row')); ?>"
                             name="<?php echo esc_attr($this->get_field_name('wr_max_row')); ?>"
                             value="<?php echo esc_attr($instance['wr_max_row']); ?>" style="width: 10%;"/>&nbsp;&nbsp;
 
 
-            <label for="<?php echo esc_attr($this->get_field_id('wr_width')); ?>"><?php esc_html_e('Item width:', 'world-of-warcraft-recruitment'); ?>
+            <label for="<?php echo esc_attr($this->get_field_id('wr_width')); ?>"><?php esc_html_e('Item width:', 'world-of-warcraft-wow-recruitment'); ?>
             </label> <input type="text"
                             id="<?php echo esc_attr($this->get_field_id('wr_width')); ?>"
                             name="<?php echo esc_attr($this->get_field_name('wr_width')); ?>"
@@ -383,9 +383,9 @@ class World_Of_Warcraft_Recruitment_Widget extends WP_Widget
         </p>
         <p>
             <label
-                for="<?php echo esc_attr($this->get_field_id('wr_tooltip')); ?>"><?php esc_html_e('Tooltip pattern:', 'world-of-warcraft-recruitment'); ?>
+                for="<?php echo esc_attr($this->get_field_id('wr_tooltip')); ?>"><?php esc_html_e('Tooltip pattern:', 'world-of-warcraft-wow-recruitment'); ?>
             </label>
-            (<em><?php esc_html_e('Tokens available:', 'world-of-warcraft-recruitment'); ?></em>
+            (<em><?php esc_html_e('Tokens available:', 'world-of-warcraft-wow-recruitment'); ?></em>
             [class], [status], [note])
             <br/>
             <input type="text"
@@ -397,9 +397,9 @@ class World_Of_Warcraft_Recruitment_Widget extends WP_Widget
         <table>
             <thead>
             <tr>
-                <th style="text-align: left; width: 20%;"><?php esc_html_e('Class', 'world-of-warcraft-recruitment'); ?></th>
-                <th style="text-align: left; width: 20%;"><?php esc_html_e('Status', 'world-of-warcraft-recruitment'); ?></th>
-                <th style="text-align: left;"><?php esc_html_e('Note', 'world-of-warcraft-recruitment'); ?></th>
+                <th style="text-align: left; width: 20%;"><?php esc_html_e('Class', 'world-of-warcraft-wow-recruitment'); ?></th>
+                <th style="text-align: left; width: 20%;"><?php esc_html_e('Status', 'world-of-warcraft-wow-recruitment'); ?></th>
+                <th style="text-align: left;"><?php esc_html_e('Note', 'world-of-warcraft-wow-recruitment'); ?></th>
             </tr>
             </thead>
             <tbody>

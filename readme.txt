@@ -3,7 +3,7 @@ Contributors: Athlios
 Donate Link: https://www.paypal.com/paypalme/athlios
 Tags: WOW, Warcraft, Guild, World of Warcraft, Recruitment
 Requires at least: 6.0
-Tested up to: 6.9.1
+Tested up to: 6.9
 Requires PHP: 7.4
 Stable tag: 2.0
 License: GPL-3.0-or-later
@@ -34,7 +34,7 @@ If you found bugs or want to suggest improvements, please open an issue on the p
 
 == Installation ==
 
-1. Unpack and Upload all files to the `/wp-content/plugins/world-of-warcraft-recruitment` directory
+1. Unpack and Upload all files to the `/wp-content/plugins/world-of-warcraft-wow-recruitment` directory
 2. Activate the plugin through the **Plugins** menu in WordPress
 3. Drag **World of Warcraft (WoW) Recruitment** to your sidebar
 4. Enter details and done!

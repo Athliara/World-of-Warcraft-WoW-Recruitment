@@ -12,7 +12,7 @@ if ( !$athlios_wow_recruit_tests_dir ) $athlios_wow_recruit_tests_dir = '/tmp/wo
 require_once $athlios_wow_recruit_tests_dir . '/includes/functions.php';
 
 function athlios_wow_recruit_manually_load_plugin() {
-	require dirname( __FILE__ ) . '/../world-of-warcraft-recruitment.php';
+	require dirname( __FILE__ ) . '/../world-of-warcraft-wow-recruitment.php';
 }
 tests_add_filter( 'muplugins_loaded', 'athlios_wow_recruit_manually_load_plugin' );
 
