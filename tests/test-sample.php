@@ -1,5 +1,9 @@
 <?php
 
+if (!defined('ABSPATH')) {
+	exit;
+}
+
 class SampleTest extends WP_UnitTestCase {
 
 	function testSample() {
@@ -7,4 +11,3 @@ class SampleTest extends WP_UnitTestCase {
 		$this->assertTrue( true );
 	}
 }
-
