@@ -2,6 +2,10 @@
 /**
  * World of Warcraft (WoW) Recruitment Admin Page
  */
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 add_action('admin_init', 'athlios_wow_recruit_options_init');
 add_action('admin_menu', 'athlios_wow_recruit_options_add_page');
 

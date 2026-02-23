@@ -34,10 +34,10 @@ class World_Of_Warcraft_Recruitment_Widget extends WP_Widget
     public function widget($args, $instance)
     {
 
-        global $wr_status;
-        global $wr_class;
-        global $wr_display_closed;
-        global $wr_theme;
+        global $awr_status;
+        global $awr_class;
+        global $awr_display_closed;
+        global $awr_theme;
         /* global $wr_max_row; */
         // Avoid extract() on modern PHP/WP; map known wrapper args explicitly.
         $before_widget = isset($args['before_widget']) ? $args['before_widget'] : '';
@@ -77,20 +77,20 @@ class World_Of_Warcraft_Recruitment_Widget extends WP_Widget
         $wr_max_row = intval($instance['wr_max_row']);
 
         /* Before widget (defined by themes). */
-        echo $before_widget;
+        echo wp_kses_post($before_widget);
 
 
         /* Display the widget title if one was input (before and after defined by themes). */
         if ($title) {
             if ($title_url) {
-                echo $before_title;
+                echo wp_kses_post($before_title);
                 ?>
 
                 <a href="<?php echo esc_url($title_url); ?>"><?php echo esc_html($title); ?> </a>
                 <?php
-                echo $after_title;
+                echo wp_kses_post($after_title);
             } else {
-                echo $before_title . esc_html($title) . $after_title;
+                echo wp_kses_post($before_title) . esc_html($title) . wp_kses_post($after_title);
             }
         }
 
@@ -112,7 +112,7 @@ class World_Of_Warcraft_Recruitment_Widget extends WP_Widget
             $row_status = isset($instance['wr_row_' . $r . '_status']) ? (int) $instance['wr_row_' . $r . '_status'] : 0;
             $row_note = isset($instance['wr_row_' . $r . '_note']) ? (string) $instance['wr_row_' . $r . '_note'] : '';
 
-            if ($wr_display_closed) {
+            if ($awr_display_closed) {
                 if ($row_status > -1) {
                     $wr_data[] = array(
                         'status' => $row_status,
@@ -142,7 +142,7 @@ class World_Of_Warcraft_Recruitment_Widget extends WP_Widget
         ?>
         <div class="wr-clear"></div>
         <div
-            class="wow-recruit-widget <?php echo esc_attr($wr_theme ? 'wr-' . $wr_theme : 'wr-normal'); ?>" <?php if ($title_url) {
+            class="wow-recruit-widget <?php echo esc_attr($awr_theme ? 'wr-' . $awr_theme : 'wr-normal'); ?>" <?php if ($title_url) {
             ?>
             onclick="location.href='<?php echo esc_js($title_url); ?>';"
             style="cursor: pointer;" <?php } ?>>
@@ -161,35 +161,38 @@ class World_Of_Warcraft_Recruitment_Widget extends WP_Widget
                 if (!empty($wr_data)) {
                     $even = false;
                     foreach ($wr_data as $k => $v) {
+                        $row_class_slug = sanitize_html_class($v['class']);
+                        $row_note_slug = sanitize_html_class(strtolower(preg_replace("/[^a-zA-Z0-9]/", "", $v['note'])));
+                        $row_status_num = (int) $v['status'];
                         ?>
                         <div
-                            class="wr-item wr-<?php echo $even ? 'even' : 'odd'; ?> wr-<?php echo $v['class']; ?> wr-<?php echo strtolower(preg_replace("/[^a-zA-Z0-9]/", "", $v['note'])); ?> wr-status<?php echo $v['status']; ?>"
+                            class="wr-item wr-<?php echo esc_attr($even ? 'even' : 'odd'); ?> wr-<?php echo esc_attr($row_class_slug); ?> wr-<?php echo esc_attr($row_note_slug); ?> wr-status<?php echo esc_attr($row_status_num); ?>"
                             title="<?php
                             /**
                              * advanced tooltip
                              * @since 1.3                       *
                              */
                             $tooltiptemp = $wr_tooltip;
-                            $tooltiptemp = str_replace("[class]", isset($wr_class[$v['class']]) ? $wr_class[$v['class']] : $v['class'], $tooltiptemp);
-                            $tooltiptemp = str_replace("[status]", isset($wr_status[$v['status']]) ? $wr_status[$v['status']] : '', $tooltiptemp);
+                            $tooltiptemp = str_replace("[class]", isset($awr_class[$v['class']]) ? $awr_class[$v['class']] : $v['class'], $tooltiptemp);
+                            $tooltiptemp = str_replace("[status]", isset($awr_status[$v['status']]) ? $awr_status[$v['status']] : '', $tooltiptemp);
                             $tooltiptemp = str_replace("[note]", $v['note'], $tooltiptemp);
                             echo esc_attr($tooltiptemp);
                             ?>" style="width:<?php echo esc_attr($wr_width); ?>">
                             <div class="wr-left">
-                                <div class="wr-icon wr-<?php echo $v['class'] ?>"></div>
+                                <div class="wr-icon wr-<?php echo esc_attr($row_class_slug); ?>"></div>
                             </div>
                             <div class="wr-right">
-                                <div class="wr-class-text wr-<?php echo $v['class'] ?>">
-                                    <?php echo esc_html(isset($wr_class[$v['class']]) ? $wr_class[$v['class']] : $v['class']); ?>
+                                <div class="wr-class-text wr-<?php echo esc_attr($row_class_slug); ?>">
+                                    <?php echo esc_html(isset($awr_class[$v['class']]) ? $awr_class[$v['class']] : $v['class']); ?>
                                 </div>
-                                <div class="wr-status wr-status<?php echo $v['status'] ?>">
-                                    <?php echo esc_html(isset($wr_status[$v['status']]) ? $wr_status[$v['status']] : ''); ?>
+                                <div class="wr-status wr-status<?php echo esc_attr($row_status_num); ?>">
+                                    <?php echo esc_html(isset($awr_status[$v['status']]) ? $awr_status[$v['status']] : ''); ?>
                                 </div>
                                 <?php
                                 if ($v['note']) {
                                     ?>
                                     <div
-                                        class="wr-note wr-<?php echo strtolower(preg_replace("/[^a-zA-Z0-9]/", "", $v['note'])); ?>">
+                                        class="wr-note wr-<?php echo esc_attr($row_note_slug); ?>">
                                         <?php echo esc_html($v['note']); ?>
                                     </div>
                                     <?php
@@ -218,7 +221,7 @@ class World_Of_Warcraft_Recruitment_Widget extends WP_Widget
          *  Frontend End
          */
         /* After widget (defined by themes). */
-        echo $after_widget;
+        echo wp_kses_post($after_widget);
         ?>
 
         <?php
@@ -248,7 +251,7 @@ class World_Of_Warcraft_Recruitment_Widget extends WP_Widget
     public function update($new_instance, $old_instance)
     {
 
-        global $wr_class;
+        global $awr_class;
 
         $instance = is_array($old_instance) ? $old_instance : array();
         $wr_max_row = isset($instance['wr_max_row']) ? intval($instance['wr_max_row']) : 15;
@@ -264,12 +267,12 @@ class World_Of_Warcraft_Recruitment_Widget extends WP_Widget
         $instance['title_url'] = esc_url_raw(isset($new_instance['title_url']) ? $new_instance['title_url'] : '');
         $instance['message'] = isset($new_instance['message']) ? wp_kses_post($new_instance['message']) : '';
 
-        foreach ($wr_class as $k => $v) {
+        foreach ($awr_class as $k => $v) {
             unset($instance[$k . '_status']);
             unset($instance[$k . '_note']);
         }
 
-        $allowed_classes = array_keys($wr_class);
+        $allowed_classes = array_keys($awr_class);
         for ($r = 0; $r < $wr_max_row; $r++) {
             $class_key = isset($new_instance['wr_row_' . $r . '_class']) ? sanitize_key($new_instance['wr_row_' . $r . '_class']) : 'deathknight';
             if (!in_array($class_key, $allowed_classes, true)) {
@@ -298,8 +301,8 @@ class World_Of_Warcraft_Recruitment_Widget extends WP_Widget
     public function form($instance)
     {
 
-        global $wr_status;
-        global $wr_class;
+        global $awr_status;
+        global $awr_class;
 
         $defaults = array(
             'title' => '',
@@ -314,7 +317,7 @@ class World_Of_Warcraft_Recruitment_Widget extends WP_Widget
         $wr_max_row = isset($instance['wr_max_row']) ? intval($instance['wr_max_row']) : 15;
 
         $r = 0;
-        foreach ($wr_class as $k => $v) {
+        foreach ($awr_class as $k => $v) {
             $legacy_status = isset($instance[$k . '_status']) ? $instance[$k . '_status'] : '';
             $legacy_note = isset($instance[$k . '_note']) ? $instance[$k . '_note'] : '';
             if ($legacy_status || $legacy_note) {
@@ -415,7 +418,7 @@ class World_Of_Warcraft_Recruitment_Widget extends WP_Widget
                             id="<?php echo esc_attr($this->get_field_id('wr_row_' . $r . '_class')); ?>"
                             name="<?php echo esc_attr($this->get_field_name('wr_row_' . $r . '_class')); ?>">
                             <?php
-                            foreach ($wr_class as $k => $v) {
+                            foreach ($awr_class as $k => $v) {
                                 ?>
                                 <option <?php selected($k, $row_class); ?> value="<?php echo esc_attr($k); ?>">
                                     <?php echo esc_html($v); ?>
@@ -431,7 +434,7 @@ class World_Of_Warcraft_Recruitment_Widget extends WP_Widget
                             id="<?php echo esc_attr($this->get_field_id('wr_row_' . $r . '_status')); ?>"
                             name="<?php echo esc_attr($this->get_field_name('wr_row_' . $r . '_status')); ?>">
                             <?php
-                            foreach ($wr_status as $k => $v) {
+                            foreach ($awr_status as $k => $v) {
                                 if ((string)$k === '1') {
                                     continue;
                                 }

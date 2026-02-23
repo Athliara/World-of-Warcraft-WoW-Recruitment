@@ -1,5 +1,9 @@
 <?php
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 /**
  * Register our widget.
  * 'Example_Widget' is the widget class used below.
