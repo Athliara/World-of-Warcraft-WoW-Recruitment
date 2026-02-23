@@ -34,10 +34,10 @@ class World_Of_Warcraft_Recruitment_Widget extends WP_Widget
     public function widget($args, $instance)
     {
 
-        global $awr_status;
-        global $awr_class;
-        global $awr_display_closed;
-        global $awr_theme;
+        global $athlios_wow_recruit_status;
+        global $athlios_wow_recruit_class;
+        global $athlios_wow_recruit_display_closed;
+        global $athlios_wow_recruit_theme;
         /* global $wr_max_row; */
         // Avoid extract() on modern PHP/WP; map known wrapper args explicitly.
         $before_widget = isset($args['before_widget']) ? $args['before_widget'] : '';
@@ -112,7 +112,7 @@ class World_Of_Warcraft_Recruitment_Widget extends WP_Widget
             $row_status = isset($instance['wr_row_' . $r . '_status']) ? (int) $instance['wr_row_' . $r . '_status'] : 0;
             $row_note = isset($instance['wr_row_' . $r . '_note']) ? (string) $instance['wr_row_' . $r . '_note'] : '';
 
-            if ($awr_display_closed) {
+            if ($athlios_wow_recruit_display_closed) {
                 if ($row_status > -1) {
                     $wr_data[] = array(
                         'status' => $row_status,
@@ -142,7 +142,7 @@ class World_Of_Warcraft_Recruitment_Widget extends WP_Widget
         ?>
         <div class="wr-clear"></div>
         <div
-            class="wow-recruit-widget <?php echo esc_attr($awr_theme ? 'wr-' . $awr_theme : 'wr-normal'); ?>" <?php if ($title_url) {
+            class="wow-recruit-widget <?php echo esc_attr($athlios_wow_recruit_theme ? 'wr-' . $athlios_wow_recruit_theme : 'wr-normal'); ?>" <?php if ($title_url) {
             ?>
             onclick="location.href='<?php echo esc_js($title_url); ?>';"
             style="cursor: pointer;" <?php } ?>>
@@ -173,8 +173,8 @@ class World_Of_Warcraft_Recruitment_Widget extends WP_Widget
                              * @since 1.3                       *
                              */
                             $tooltiptemp = $wr_tooltip;
-                            $tooltiptemp = str_replace("[class]", isset($awr_class[$v['class']]) ? $awr_class[$v['class']] : $v['class'], $tooltiptemp);
-                            $tooltiptemp = str_replace("[status]", isset($awr_status[$v['status']]) ? $awr_status[$v['status']] : '', $tooltiptemp);
+                            $tooltiptemp = str_replace("[class]", isset($athlios_wow_recruit_class[$v['class']]) ? $athlios_wow_recruit_class[$v['class']] : $v['class'], $tooltiptemp);
+                            $tooltiptemp = str_replace("[status]", isset($athlios_wow_recruit_status[$v['status']]) ? $athlios_wow_recruit_status[$v['status']] : '', $tooltiptemp);
                             $tooltiptemp = str_replace("[note]", $v['note'], $tooltiptemp);
                             echo esc_attr($tooltiptemp);
                             ?>" style="width:<?php echo esc_attr($wr_width); ?>">
@@ -183,10 +183,10 @@ class World_Of_Warcraft_Recruitment_Widget extends WP_Widget
                             </div>
                             <div class="wr-right">
                                 <div class="wr-class-text wr-<?php echo esc_attr($row_class_slug); ?>">
-                                    <?php echo esc_html(isset($awr_class[$v['class']]) ? $awr_class[$v['class']] : $v['class']); ?>
+                                    <?php echo esc_html(isset($athlios_wow_recruit_class[$v['class']]) ? $athlios_wow_recruit_class[$v['class']] : $v['class']); ?>
                                 </div>
                                 <div class="wr-status wr-status<?php echo esc_attr($row_status_num); ?>">
-                                    <?php echo esc_html(isset($awr_status[$v['status']]) ? $awr_status[$v['status']] : ''); ?>
+                                    <?php echo esc_html(isset($athlios_wow_recruit_status[$v['status']]) ? $athlios_wow_recruit_status[$v['status']] : ''); ?>
                                 </div>
                                 <?php
                                 if ($v['note']) {
@@ -251,7 +251,7 @@ class World_Of_Warcraft_Recruitment_Widget extends WP_Widget
     public function update($new_instance, $old_instance)
     {
 
-        global $awr_class;
+        global $athlios_wow_recruit_class;
 
         $instance = is_array($old_instance) ? $old_instance : array();
         $wr_max_row = isset($instance['wr_max_row']) ? intval($instance['wr_max_row']) : 15;
@@ -267,12 +267,12 @@ class World_Of_Warcraft_Recruitment_Widget extends WP_Widget
         $instance['title_url'] = esc_url_raw(isset($new_instance['title_url']) ? $new_instance['title_url'] : '');
         $instance['message'] = isset($new_instance['message']) ? wp_kses_post($new_instance['message']) : '';
 
-        foreach ($awr_class as $k => $v) {
+        foreach ($athlios_wow_recruit_class as $k => $v) {
             unset($instance[$k . '_status']);
             unset($instance[$k . '_note']);
         }
 
-        $allowed_classes = array_keys($awr_class);
+        $allowed_classes = array_keys($athlios_wow_recruit_class);
         for ($r = 0; $r < $wr_max_row; $r++) {
             $class_key = isset($new_instance['wr_row_' . $r . '_class']) ? sanitize_key($new_instance['wr_row_' . $r . '_class']) : 'deathknight';
             if (!in_array($class_key, $allowed_classes, true)) {
@@ -301,8 +301,8 @@ class World_Of_Warcraft_Recruitment_Widget extends WP_Widget
     public function form($instance)
     {
 
-        global $awr_status;
-        global $awr_class;
+        global $athlios_wow_recruit_status;
+        global $athlios_wow_recruit_class;
 
         $defaults = array(
             'title' => '',
@@ -317,7 +317,7 @@ class World_Of_Warcraft_Recruitment_Widget extends WP_Widget
         $wr_max_row = isset($instance['wr_max_row']) ? intval($instance['wr_max_row']) : 15;
 
         $r = 0;
-        foreach ($awr_class as $k => $v) {
+        foreach ($athlios_wow_recruit_class as $k => $v) {
             $legacy_status = isset($instance[$k . '_status']) ? $instance[$k . '_status'] : '';
             $legacy_note = isset($instance[$k . '_note']) ? $instance[$k . '_note'] : '';
             if ($legacy_status || $legacy_note) {
@@ -418,7 +418,7 @@ class World_Of_Warcraft_Recruitment_Widget extends WP_Widget
                             id="<?php echo esc_attr($this->get_field_id('wr_row_' . $r . '_class')); ?>"
                             name="<?php echo esc_attr($this->get_field_name('wr_row_' . $r . '_class')); ?>">
                             <?php
-                            foreach ($awr_class as $k => $v) {
+                            foreach ($athlios_wow_recruit_class as $k => $v) {
                                 ?>
                                 <option <?php selected($k, $row_class); ?> value="<?php echo esc_attr($k); ?>">
                                     <?php echo esc_html($v); ?>
@@ -434,7 +434,7 @@ class World_Of_Warcraft_Recruitment_Widget extends WP_Widget
                             id="<?php echo esc_attr($this->get_field_id('wr_row_' . $r . '_status')); ?>"
                             name="<?php echo esc_attr($this->get_field_name('wr_row_' . $r . '_status')); ?>">
                             <?php
-                            foreach ($awr_status as $k => $v) {
+                            foreach ($athlios_wow_recruit_status as $k => $v) {
                                 if ((string)$k === '1') {
                                     continue;
                                 }

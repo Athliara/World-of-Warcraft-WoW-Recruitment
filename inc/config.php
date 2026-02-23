@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
  * custom class/ status texts
  * @since 1.2
  */
-$awr_defaults = array(
+$athlios_wow_recruit_defaults = array(
     'class0' => 'Death Knight',
     'class1' => 'Druid',
     'class2' => 'Paladin',
@@ -31,46 +31,46 @@ $awr_defaults = array(
     'display_closed' => 0,
 );
 
-$awr_options = get_option('athlios_wow_recruit', array());
-if (!is_array($awr_options)) {
-    $awr_options = array();
+$athlios_wow_recruit_options = get_option('athlios_wow_recruit', array());
+if (!is_array($athlios_wow_recruit_options)) {
+    $athlios_wow_recruit_options = array();
 }
-$awr_options = wp_parse_args($awr_options, $awr_defaults);
+$athlios_wow_recruit_options = wp_parse_args($athlios_wow_recruit_options, $athlios_wow_recruit_defaults);
 
-$awr_status = array(
-    '0' => $awr_options['status0'],
-    '1' => $awr_options['status2'], // legacy Low values are mapped to Medium
-    '2' => $awr_options['status2'],
-    '3' => $awr_options['status3']
+$athlios_wow_recruit_status = array(
+    '0' => $athlios_wow_recruit_options['status0'],
+    '1' => $athlios_wow_recruit_options['status2'], // legacy Low values are mapped to Medium
+    '2' => $athlios_wow_recruit_options['status2'],
+    '3' => $athlios_wow_recruit_options['status3']
 );
 
-$awr_class = array(
-    'deathknight' => $awr_options['class0'],
-    'druid' => $awr_options['class1'],
-    'paladin' => $awr_options['class2'],
-    'hunter' => $awr_options['class3'],
-    'rogue' => $awr_options['class4'],
-    'priest' => $awr_options['class5'],
-    'shaman' => $awr_options['class6'],
-    'mage' => $awr_options['class7'],
-    'warlock' => $awr_options['class8'],
-    'warrior' => $awr_options['class9'],
-    'monk' => $awr_options['class10'],
-    'demonhunter' => $awr_options['class11'],
-    'evoker' => $awr_options['class12'],
+$athlios_wow_recruit_class = array(
+    'deathknight' => $athlios_wow_recruit_options['class0'],
+    'druid' => $athlios_wow_recruit_options['class1'],
+    'paladin' => $athlios_wow_recruit_options['class2'],
+    'hunter' => $athlios_wow_recruit_options['class3'],
+    'rogue' => $athlios_wow_recruit_options['class4'],
+    'priest' => $athlios_wow_recruit_options['class5'],
+    'shaman' => $athlios_wow_recruit_options['class6'],
+    'mage' => $athlios_wow_recruit_options['class7'],
+    'warlock' => $athlios_wow_recruit_options['class8'],
+    'warrior' => $athlios_wow_recruit_options['class9'],
+    'monk' => $athlios_wow_recruit_options['class10'],
+    'demonhunter' => $athlios_wow_recruit_options['class11'],
+    'evoker' => $athlios_wow_recruit_options['class12'],
 );
 
-if (!$awr_options['custom_style']) {
+if (!$athlios_wow_recruit_options['custom_style']) {
     if (!function_exists('athlios_wow_recruit_widget_enqueue_styles')) {
         function athlios_wow_recruit_widget_enqueue_styles()
         {
-            global $awr_options;
-            wp_enqueue_style('wr_layout', plugins_url('css/style' . (($awr_options['theme'] != '') ? '-' . $awr_options['theme'] : '') . '.css', WR__FILE__), array(), '2.0');
+            global $athlios_wow_recruit_options;
+            wp_enqueue_style('wr_layout', plugins_url('css/style' . (($athlios_wow_recruit_options['theme'] != '') ? '-' . $athlios_wow_recruit_options['theme'] : '') . '.css', WR__FILE__), array(), '2.0');
         }
     }
 
     add_action('init', 'athlios_wow_recruit_widget_enqueue_styles');
 }
 
-$awr_display_closed = !empty($awr_options['display_closed']);
-$awr_theme = $awr_options['theme'];
+$athlios_wow_recruit_display_closed = !empty($athlios_wow_recruit_options['display_closed']);
+$athlios_wow_recruit_theme = $athlios_wow_recruit_options['theme'];
